@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Aevon Knowledge Base">
+  <title>Aevon Knowledge Base</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="sky" aria-hidden="true">
+    <div class="cloud c1"></div><div class="cloud c2"></div><div class="cloud c3"></div>
+    <div class="bird b1">⌁</div><div class="bird b2">⌁</div><div class="bird b3">⌁</div>
+  </div>
+
+  <header class="topbar">
+    <button class="brand" data-route="home" aria-label="Aevon Knowledge Base home">
+      <span class="brand-mark">A</span>
+      <span><b>Aevon</b><small>Knowledge Base</small></span>
+    </button>
+    <div class="top-actions">
+      <button id="adminBtn" class="ghost hidden">Admin</button>
+      <div id="userBox"></div>
+    </div>
+  </header>
+
+  <main id="app">
+    <section id="homeView">
+      <div class="hero">
+        <div class="eyebrow">AEVON HELP CENTER</div>
+        <h1>How can we help?</h1>
+        <p>Search guides, answers, support tips, and server information.</p>
+        <div class="search-wrap">
+          <span>⌕</span>
+          <input id="searchInput" type="search" placeholder="Search the knowledge base…" autocomplete="off">
+          <kbd>/</kbd>
+        </div>
+        <div id="commonSearches" class="quick-searches"></div>
+      </div>
+
+      <div class="layout shell">
+        <aside class="sidebar card">
+          <div class="side-title">Categories</div>
+          <button class="category active" data-category="">All articles</button>
+          <div id="categoryList"></div>
+          <div class="side-title tags-title">Browse by tag</div>
+          <div id="tagList" class="tag-list"></div>
+        </aside>
+
+        <section class="content">
+          <div id="pinnedSection" class="section-block">
+            <div class="section-heading"><div><span class="mini">PINNED</span><h2>Important topics</h2></div></div>
+            <div id="pinnedGrid" class="article-grid"></div>
+          </div>
+
+          <div class="section-block">
+            <div class="section-heading">
+              <div><span class="mini">KNOWLEDGE BASE</span><h2 id="articleHeading">Latest articles</h2></div>
+              <span id="resultCount" class="count"></span>
+            </div>
+            <div id="articleGrid" class="article-grid"></div>
+            <div id="emptyState" class="empty hidden">No articles matched your search.</div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section id="articleView" class="hidden shell article-shell">
+      <button class="back" data-route="home">← Back to knowledge base</button>
+      <article class="article card">
+        <div id="articleTags" class="tag-row"></div>
+        <h1 id="articleTitle"></h1>
+        <div id="articleMeta" class="article-meta"></div>
+        <div id="articleBody" class="article-body"></div>
+        <div class="helpful">
+          <div><b>Was this article helpful?</b><small>Your feedback helps us improve Aevon.</small></div>
+          <button id="likeBtn" class="like-btn">♡ <span id="likeCount">0</span></button>
+        </div>
+      </article>
+      <section class="comments card">
+        <div class="comments-head"><div><span class="mini">COMMUNITY</span><h2>Comments</h2></div><span id="commentCount" class="count"></span></div>
+        <div id="commentComposer"></div>
+        <div id="commentList"></div>
+      </section>
+    </section>
+
+    <section id="adminView" class="hidden shell admin-shell">
+      <div class="admin-head">
+        <div><span class="mini">ADMIN ONLY</span><h1>Knowledge Base Manager</h1><p>Create, edit, publish and organize your content.</p></div>
+        <button class="ghost" data-route="home">View public site</button>
+      </div>
+
+      <div class="admin-grid">
+        <aside class="card admin-nav">
+          <button class="admin-tab active" data-admin-tab="articles">Articles</button>
+          <button class="admin-tab" data-admin-tab="categories">Categories</button>
+          <button class="admin-tab" data-admin-tab="tags">Tags</button>
+          <button class="admin-tab" data-admin-tab="comments">Comments</button>
+        </aside>
+        <section class="card admin-panel">
+          <div id="adminArticles">
+            <div class="panel-head"><h2>Articles</h2><button id="newArticleBtn" class="primary">+ New article</button></div>
+            <div id="adminArticleList"></div>
+          </div>
+          <div id="adminCategories" class="hidden"></div>
+          <div id="adminTags" class="hidden"></div>
+          <div id="adminComments" class="hidden"></div>
+        </section>
+      </div>
+    </section>
+
+    <section id="editorView" class="hidden shell editor-shell">
+      <div class="editor-top">
+        <button class="back" id="cancelEditor">← Admin dashboard</button>
+        <div><button id="saveDraftBtn" class="ghost">Save draft</button><button id="publishBtn" class="primary">Publish</button></div>
+      </div>
+      <div class="editor-layout">
+        <section class="card editor-main">
+          <input id="editTitle" class="title-input" placeholder="Article title">
+          <input id="editExcerpt" class="excerpt-input" placeholder="Short description shown in search results">
+          <div class="toolbar" id="toolbar">
+            <select id="formatBlock" title="Text style"><option value="p">Paragraph</option><option value="h2">Heading 2</option><option value="h3">Heading 3</option></select>
+            <select id="fontSize" title="Font size"><option value="3">Normal</option><option value="2">Small</option><option value="4">Large</option><option value="5">Larger</option><option value="6">Huge</option></select>
+            <button data-cmd="bold" title="Bold"><b>B</b></button>
+            <button data-cmd="italic" title="Italic"><i>I</i></button>
+            <button data-cmd="underline" title="Underline"><u>U</u></button>
+            <button data-cmd="insertUnorderedList" title="Bullets">• List</button>
+            <button data-cmd="insertOrderedList" title="Numbered list">1. List</button>
+            <button id="linkBtn" title="Insert link">🔗</button>
+            <button id="emojiBtn" title="Insert emoji">😊</button>
+            <button id="imageBtn" title="Upload screenshot/image">🖼 Image</button>
+            <button data-cmd="undo" title="Undo">↶</button>
+            <button data-cmd="redo" title="Redo">↷</button>
+          </div>
+          <input id="imageInput" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+          <div id="editor" class="rich-editor" contenteditable="true" data-placeholder="Write your article here…"></div>
+          <div id="emojiPicker" class="emoji-picker hidden"></div>
+        </section>
+
+        <aside class="card editor-settings">
+          <h3>Article settings</h3>
+          <label>Category<select id="editCategory"></select></label>
+          <label>Tags<div id="editTags" class="check-tags"></div></label>
+          <label>Search keywords<input id="editKeywords" placeholder="rank, economy, claim"></label>
+          <label class="toggle"><input id="editPinned" type="checkbox"><span>Pin this article</span></label>
+          <label class="toggle"><input id="editFeatured" type="checkbox"><span>Featured article</span></label>
+          <label class="toggle"><input id="editComments" type="checkbox" checked><span>Allow comments</span></label>
+          <div class="status-box" id="editorStatus">New article</div>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
