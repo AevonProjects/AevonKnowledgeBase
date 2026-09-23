@@ -15,10 +15,16 @@
   </div>
 
   <header class="topbar">
-    <button class="brand" data-route="home" aria-label="Aevon Knowledge Base home">
+    <button class="brand" data-route="portal" aria-label="Aevon home">
       <span class="brand-mark">A</span>
       <span><b>Aevon</b><small>Knowledge Base</small></span>
     </button>
+    <nav class="main-nav">
+      <button data-route="portal" class="nav-link active">Home</button>
+      <button data-route="kb" class="nav-link">Knowledge Base</button>
+      <button data-route="daily" class="nav-link">Daily Posts</button>
+      <button data-route="tickets" class="nav-link">Tickets <span id="ticketBadge" class="notif-badge hidden">0</span></button>
+    </nav>
     <div class="top-actions">
       <button id="adminBtn" class="ghost hidden">Admin</button>
       <div id="userBox"></div>
@@ -26,7 +32,15 @@
   </header>
 
   <main id="app">
-    <section id="homeView">
+    <section id="portalHomeView">
+      <div class="portal-hero shell"><div><span class="eyebrow">AEVON COMMUNITY</span><h1>Home</h1><p>Latest news, server updates, status, and community activity.</p></div><div id="serverStatusCard" class="server-status-card card"><span class="status-dot"></span><div><b>Server Status</b><small id="serverStatusText">Checking…</small></div><strong id="onlineCount">—</strong></div></div>
+      <div class="shell portal-grid">
+        <section><div class="section-heading"><div><span class="mini">LATEST</span><h2>News & Updates</h2></div></div><div id="newsFeed" class="news-feed"></div></section>
+        <aside><div class="card home-side"><span class="mini">COMMUNITY</span><h3>Daily Posts</h3><div id="homeDailyPosts"></div><button class="ghost wide" data-route="daily">View all posts</button></div></aside>
+      </div>
+    </section>
+
+    <section id="homeView" class="hidden">
       <div class="hero">
         <div class="eyebrow">AEVON HELP CENTER</div>
         <h1>How can we help?</h1>
@@ -85,6 +99,15 @@
       </section>
     </section>
 
+    <section id="dailyView" class="hidden shell community-shell">
+      <div class="page-head"><div><span class="mini">COMMUNITY</span><h1>Daily Posts</h1><p>Share updates with the community and join the conversation.</p></div><button id="createPostBtn" class="primary">+ Create post</button></div>
+      <div id="postAllowance" class="allowance-note"></div><div id="postComposer" class="card post-composer hidden"><input id="postTitle" placeholder="Post title"><textarea id="postBody" maxlength="3000" placeholder="What's happening?"></textarea><div class="composer-actions"><button id="cancelPost" class="ghost">Cancel</button><button id="submitPost" class="primary">Publish post</button></div></div><div id="dailyFeed" class="daily-feed"></div>
+    </section>
+
+    <section id="ticketsView" class="hidden shell community-shell">
+      <div class="page-head"><div><span class="mini">SUPPORT</span><h1>Tickets</h1><p>Request additional post permissions or contact the admins.</p></div><button id="newTicketBtn" class="primary">+ New ticket</button></div><div id="ticketComposer" class="card post-composer hidden"><select id="ticketType"><option value="post_permission">Request more post permissions</option><option value="support">General support</option></select><input id="ticketSubject" placeholder="Subject"><textarea id="ticketMessage" maxlength="3000" placeholder="Describe your request…"></textarea><div class="composer-actions"><button id="cancelTicket" class="ghost">Cancel</button><button id="submitTicket" class="primary">Submit ticket</button></div></div><div id="ticketList"></div><div id="ticketThread" class="hidden"></div>
+    </section>
+
     <section id="adminView" class="hidden shell admin-shell">
       <div class="admin-head">
         <div><span class="mini">ADMIN ONLY</span><h1>Knowledge Base Manager</h1><p>Create, edit, publish and organize your content.</p></div>
@@ -93,7 +116,10 @@
 
       <div class="admin-grid">
         <aside class="card admin-nav">
-          <button class="admin-tab active" data-admin-tab="articles">Articles</button>
+          <button class="admin-tab active" data-admin-tab="articles">KB Articles</button>
+          <button class="admin-tab" data-admin-tab="news">News</button>
+          <button class="admin-tab" data-admin-tab="posts">Daily Posts</button>
+          <button class="admin-tab" data-admin-tab="tickets">Tickets</button>
           <button class="admin-tab" data-admin-tab="categories">Categories</button>
           <button class="admin-tab" data-admin-tab="tags">Tags</button>
           <button class="admin-tab" data-admin-tab="comments">Comments</button>
@@ -103,6 +129,7 @@
             <div class="panel-head"><h2>Articles</h2><button id="newArticleBtn" class="primary">+ New article</button></div>
             <div id="adminArticleList"></div>
           </div>
+          <div id="adminNews" class="hidden"></div><div id="adminPosts" class="hidden"></div><div id="adminTickets" class="hidden"></div>
           <div id="adminCategories" class="hidden"></div>
           <div id="adminTags" class="hidden"></div>
           <div id="adminComments" class="hidden"></div>
